@@ -30,5 +30,17 @@ jobs:
       - name: Run Lint
         run: npm run lint
 
+      - name: Run Type Check
+        run: npx tsc --noEmit
+
       - name: Build project
         run: npm run build
+
+      - name: Bundle Size Check (optional)
+        run: npm run bundle-size --if-present
+
+      - name: Security Audit (high+)
+        run: npm audit --audit-level=high
+
+      - name: Run Tests
+        run: npm run test --if-present

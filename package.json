@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "type-check": "tsc --noEmit",
+    "typecheck": "npm run type-check",
+    "bundle-size": "size-limit"
   },
   "dependencies": {
     "next": "16.1.6",
@@ -14,13 +17,21 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "@size-limit/file": "^11.2.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "size-limit": "^11.2.0",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "size-limit": [
+    {
+      "path": ".next/static/chunks/*.js",
+      "limit": "400 kB"
+    }
+  ]
 }

@@ -1,0 +1,99 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+
+categories:
+  - title: '🚀 Features'
+    labels:
+      - 'feature'
+      - 'enhancement'
+      - 'feat'
+  - title: '🦊 Wallet & Web3'
+    labels:
+      - 'wallet'
+      - 'web3'
+      - 'wagmi'
+      - 'viem'
+      - 'walletconnect'
+      - 'rainbowkit'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'fix'
+      - 'bugfix'
+      - 'bug'
+  - title: '🧰 Maintenance'
+    labels:
+      - 'chore'
+      - 'maintenance'
+      - 'refactor'
+  - title: '📝 Documentation'
+    labels:
+      - 'documentation'
+      - 'docs'
+  - title: '🔧 Configuration'
+    labels:
+      - 'configuration'
+      - 'config'
+  - title: '🧪 Tests'
+    labels:
+      - 'tests'
+      - 'test'
+  - title: '⬆️ Dependencies'
+    labels:
+      - 'dependencies'
+      - 'deps'
+  - title: '🎨 Frontend'
+    labels:
+      - 'frontend'
+      - 'ui'
+      - 'ux'
+      - 'design'
+  - title: '⚡ Performance & Accessibility'
+    labels:
+      - 'performance'
+      - 'a11y'
+      - 'accessibility'
+      - 'lighthouse'
+  - title: '🔐 Security'
+    labels:
+      - 'security'
+  - title: '🚀 CI/CD'
+    labels:
+      - 'ci-cd'
+      - 'github-actions'
+      - 'ci'
+  - title: '👥 Contributors'
+    labels:
+      - 'first-time-contributor'
+      - 'repeat-contributor'
+      - 'org-member' 
+
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+change-title-escapes: '\<*_&'
+
+template: |
+  ## What's Changed
+
+  $CHANGES
+
+  ## Frontend Web3 Notes
+
+  Confirm wallet flows, supported chains, and environment variable updates before release.
+
+  ## Contributors
+
+  $CONTRIBUTORS
+
+  **Full Changelog**: https://github.com/$OWNER/$REPOSITORY/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
+
+exclude-labels:
+  - 'skip-changelog'
+  - 'no-changelog'
+  - 'duplicate'
+  - 'invalid'
+  - 'wontfix'
+
+replacers:
+  - search: '/CVE-(\d{4})-(\d+)/g'
+    replace: '[CVE-$1-$2](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-$1-$2)'
+
+include-pre-releases: false

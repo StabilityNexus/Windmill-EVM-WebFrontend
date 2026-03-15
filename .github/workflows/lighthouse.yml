@@ -1,3 +1,6 @@
+# Lighthouse CI Repo: https://github.com/GoogleChrome/lighthouse-ci
+# Lighthouse Scoring Guide : https://developer.chrome.com/docs/lighthouse/performance/performance-scoring
+
 name: Lighthouse CI
 
 on:
