@@ -1,0 +1,68 @@
+# Lighthouse CI Repo: https://github.com/GoogleChrome/lighthouse-ci
+# Lighthouse Scoring Guide : https://developer.chrome.com/docs/lighthouse/performance/performance-scoring
+
+name: Lighthouse CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          # cache: 'npm'              # for enable caching to speed up installs
+
+      - name: Install dependencies
+        run: npm install
+
+      # Next.js: build before collecting (required for static/SSR export)
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli
+
+      - name: Run Lighthouse Collect
+        run: |
+          LHCI_BUILD_CONTEXT__CURRENT_HASH=github-actions \
+          lhci collect --config=lighthouserc.js || true
+
+      # Future: Enforce score thresholds to fail the CI job if scores drop below them. (Uncomment after setting baselines by running Lighthouse a few times to determine realistic scores.)
+      # - name: Run Lighthouse Assert
+      #   run: |
+      #     LHCI_BUILD_CONTEXT__CURRENT_HASH=github-actions \
+      #     lhci assert --config=lighthouserc.js || true
+
+      - name: Run Lighthouse Upload
+        run: |
+          LHCI_BUILD_CONTEXT__CURRENT_HASH=github-actions \
+          lhci upload --config=lighthouserc.js || true
+
+      - name: Show report files
+        run: ls -l .lighthouseci
+
+      - name: Upload Lighthouse Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: |
+            .lighthouseci/*.html
+            .lighthouseci/*.json
+
+      # if we want to Post Lighthouse scores as PR comment
+      # - name: Comment PR with scores
+      #   uses: actions/github-script@v7
+      #   if: github.event_name == 'pull_request'
+      #   with:
+      #     script: |
+      #       // parse .lighthouseci/*.json and post summary
